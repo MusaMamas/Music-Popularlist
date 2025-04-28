@@ -29,7 +29,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(new AntPathRequestMatcher("/h2-console/**")).permitAll() 
+                        .requestMatchers(new AntPathRequestMatcher("/postgres/**")).permitAll() 
                         .requestMatchers(mvcMatcherBuilder.pattern("/css/**"),
                                 mvcMatcherBuilder.pattern("/js/**"),
                                 mvcMatcherBuilder.pattern("/images/**"),
@@ -39,7 +39,7 @@ public class SecurityConfig {
                         .requestMatchers(mvcMatcherBuilder.pattern("/api/**")).permitAll()
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers(new AntPathRequestMatcher("/posgres/**"))
+                        .ignoringRequestMatchers(new AntPathRequestMatcher("/postgres/**"))
                         .ignoringRequestMatchers(new AntPathRequestMatcher("/api/**")))
                 .headers(headers -> headers
                         .frameOptions(frameOptions -> frameOptions.disable()))
