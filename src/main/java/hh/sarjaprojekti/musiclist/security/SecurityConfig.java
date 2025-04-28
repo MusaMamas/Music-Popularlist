@@ -39,7 +39,7 @@ public class SecurityConfig {
                         .requestMatchers(mvcMatcherBuilder.pattern("/api/**")).permitAll()
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers(new AntPathRequestMatcher("/h2-console/**"))
+                        .ignoringRequestMatchers(new AntPathRequestMatcher("/posgres/**"))
                         .ignoringRequestMatchers(new AntPathRequestMatcher("/api/**")))
                 .headers(headers -> headers
                         .frameOptions(frameOptions -> frameOptions.disable()))
