@@ -3,6 +3,7 @@ package hh.sarjaprojekti.musiclist.domain;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "user_tracks")
 public class UserTrack {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,6 +3,7 @@ package hh.sarjaprojekti.musiclist.domain;
 import jakarta.persistence.*;
 
 @Entity(name = "users")
+@Table(name = "users")
 public class User {
 
     @Id
