@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href=@{/css/style.css}>
+    <title>Add Genre</title>
+</head>
+
+<body>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Add genres</h1>
+        <div>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit">Logout</button>
+            </form>
+            <span th:text="${#authentication.name}" style="margin-right: 10px;">Username</span>
+        </div>
+    </div>
+    <form th:action="@{/addgenre}" th:object="${genre}" method="post">
+        <div>
+            <label for="name">Genre Name:</label>
+            <input type="text" id="name" th:field="*{name}" required>
+        </div>
+        <div>
+            <button type="submit">Save</button>
+            <a th:href="@{/genrelist}"><button type="button">Cancel</button></a>
+        </div>
+    </form>
+</body>
+
+</html>

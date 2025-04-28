@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href=@{/css/style.css}>
+    <title>Genre List</title>
+</head>
+
+<body>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Genres</h1>
+        <div>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit">Logout</button>
+            </form>
+            <span th:text="${#authentication.name}" style="margin-right: 10px;">Username</span>
+        </div>
+    </div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+        <tr th:each="genre : ${genres}">
+            <td th:text="${genre.genreid}">ID</td>
+            <td><a th:href="@{/genre/{id}(id=${genre.genreid})}" th:text="${genre.name}">Name</a></td>
+        </tr>
+    </table>
+    <br>
+    <a th:href="@{/addgenre}"><button type="button">Add Genre</button></a>
+    <a th:href="@{/serielist}"><button type="button">Back to Series</button></a>
+</body>
+
+</html>

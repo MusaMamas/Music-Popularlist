@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1 th:if="${genreFilter}" th:text="${genre.name} + ' Tracks'">Genre Tracks</h1>
+    <h1 th:unless="${genreFilter}">All Tracks</h1>
+    <div>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit">Logout</button>
+        </form>
+        <span th:text="${#authentication.name}" style="margin-right: 10px;">Username</span>
+    </div>
+</div>
+
+<div style="margin-bottom: 20px; padding: 10px; background-color: #f5f5f5; border-radius: 5px;">
+    <form th:action="@{/tracklist}" method="get">
+        <label for="genreFilter">Genre:</label>
+        <select name="genreId" id="genreFilter">
+            <option value="">All Genres</option>
+            <option th:each="genreOption : ${genres}" th:value="${genreOption.genreid}"
+                    th:text="${genreOption.name}"
+                    th:selected="${selectedGenreId != null && selectedGenreId == genreOption.genreid}">
+            </option>
+        </select>
+
+        <button type="submit" style="margin-left: 10px;">Filter</button>
+        <a th:href="@{/tracklist}" style="margin-left: 10px;"><button type="button">Clear Filters</button></a>
+    </form>
+</div>
+
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Artist</th>
+        <th>Year</th>
+        <th>Duration (sec)</th>
+        <th>Likes</th> <!-- 👈 New Column -->
+        <th>Genre</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="track : ${tracks}">
+        <td><a th:href="@{/tracks/{id}(id=${track.id})}" th:text="${track.title}">Title</a></td>
+        <td th:text="${track.artist}">Artist</td>
+        <td th:text="${track.releaseYear}">Year</td>
+        <td th:text="${track.duration}">Duration</td>
+        <td th:text="${track.likes}">Likes</td> <!-- 👈 Likes shown here -->
+        <td th:text="${track.genre.name}">Genre</td>
+        <td>
+            <form th:if="${!userTrackMap.containsKey(track.id)}" th:action="@{/tracks/addtouser}" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${track.id}" />
+                <button type="submit">Add to My List</button>
+            </form>
+
+            <form th:if="${userTrackMap.containsKey(track.id)}" th:action="@{/tracks/removefromuser}" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${track.id}" />
+                <button type="submit" style="background-color: #4CAF50; color: white;">In My List ✓</button>
+            </form>
+
+            <form th:action="@{/tracks/delete/{id}(id=${track.id})}" method="post" sec:authorize="hasAuthority('ADMIN')" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<br>
+<div sec:authorize="hasAuthority('ADMIN')">
+    <a th:href="@{/addtrack}"><button type="button">Add Track</button></a>
+</div>
+<a th:href="@{/genrelist}"><button type="button">View Genres</button></a>
+<a th:href="@{/user/tracks}"><button type="button">My Tracks</button></a>
+
+</body>
+</html>

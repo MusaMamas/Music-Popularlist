@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Music Billboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div style="max-width: 400px; margin: auto; text-align: center; margin-top: 100px;">
+    <h2>Welcome to Music Billboard 🎵</h2>
+
+    <form th:action="@{/login}" method="post">
+        <div>
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br><br>
+        </div>
+
+        <div>
+            <label for="password">Password:</label><br>
+            <input type="password" id="password" name="password" required><br><br>
+        </div>
+
+        <!-- Show error if login failed -->
+        <div th:if="${param.error}" style="color: red; margin-bottom: 10px;">
+            Invalid username or password.
+        </div>
+
+        <!-- Show success message after registration -->
+        <div th:if="${param.registered}" style="color: green; margin-bottom: 10px;">
+            Registration successful! Please login.
+        </div>
+
+        <div>
+            <button type="submit">Login</button>
+        </div>
+    </form>
+
+    <div style="margin-top: 20px;">
+        <p>Don't have an account?</p>
+        <a th:href="@{/register}">
+            <button type="button">Sign Up</button>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>

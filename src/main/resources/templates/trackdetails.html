@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <title>Track Details</title>
+</head>
+
+<body>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1 th:text="${track.title}">Track Title</h1>
+    <div>
+        <form th:action="@{/logout}" method="post" style="display: inline;">
+            <button type="submit">Logout</button>
+        </form>
+        <span th:text="${#authentication.name}" style="margin-right: 10px;">Username</span>
+    </div>
+</div>
+
+<p><strong>Artist:</strong> <span th:text="${track.artist}">Artist</span></p>
+<p><strong>Year:</strong> <span th:text="${track.releaseYear}">Year</span></p>
+<p><strong>Duration:</strong> <span th:text="${track.duration}">Duration</span> seconds</p>
+<p><strong>Description:</strong> <span th:text="${track.description}">Description</span></p>
+<p><strong>Likes:</strong> <span th:text="${track.likes}">Likes</span></p> <!-- 👈 Changed -->
+<p><strong>Genre:</strong> <span th:text="${track.genre.name}">Genre</span></p>
+
+<br>
+<a th:href="@{/tracklist}"><button type="button">Back to Tracks</button></a>
+</body>
+</html>
